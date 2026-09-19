@@ -4,6 +4,7 @@ import com.example.learningreview.boundedContext.app.MemberFacade;
 import com.example.learningreview.boundedContext.member.domain.Member;
 import com.example.learningreview.boundedContext.post.app.PostFacade;
 import com.example.learningreview.boundedContext.post.domain.Post;
+import com.example.learningreview.global.RsData.RsData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -43,10 +44,13 @@ public class PostDataInit {
 
         // user1 회원(4번 회원)이 글 3개 작성
         Member author1 = memberFacade.findByUsername("user1").get();
-        Post post1 = postFacade.write(author1, "제목1", "내용1").getData();
-        log.debug("post1 : {}", post1.getId());
-        Post post2 = postFacade.write(author1, "제목2", "내용2").getData();
-        Post post3 = postFacade.write(author1, "제목3", "내용3").getData();
+        RsData<Post> RsDataPost1 = postFacade.write(author1, "제목1", "내용1");
+        log.debug("Post1RsData : {}", RsDataPost1.getMsg());
+        RsData<Post> RsDataPost2 = postFacade.write(author1, "제목2", "내용2");
+        log.debug("Post2RsData : {}", RsDataPost2.getMsg());
+        RsData<Post> RsDataPost3 = postFacade.write(author1, "제목3", "내용3");
+        log.debug("Post3RsData : {}", RsDataPost3.getMsg());
+
 
         // user2 회원(5번 회원)이 글 2개 작성
         Member author2 = memberFacade.findByUsername("user2").get();
