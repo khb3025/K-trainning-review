@@ -1,11 +1,10 @@
 package com.example.learningreview.boundedContext.post.domain;
 
-import com.example.learningreview.boundedContext.member.domain.Member;
 import com.example.learningreview.global.jpa.entity.BaseIdAndTime;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 
@@ -19,12 +18,12 @@ public class PostComment extends BaseIdAndTime {
     private Post post;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Member author;
+    private PostMember author;
 
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    public PostComment(Post post, Member author, String content) {
+    public PostComment(Post post, PostMember author, String content) {
         this.post = post;
         this.author = author;
         this.content = content;

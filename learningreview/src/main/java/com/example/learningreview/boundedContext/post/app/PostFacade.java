@@ -1,12 +1,10 @@
 package com.example.learningreview.boundedContext.post.app;
 
-import com.example.learningreview.boundedContext.member.domain.Member;
 import com.example.learningreview.boundedContext.post.domain.Post;
 import com.example.learningreview.boundedContext.post.domain.PostMember;
 import com.example.learningreview.boundedContext.post.out.PostMemberRepository;
 import com.example.learningreview.boundedContext.post.out.PostRepository;
 import com.example.learningreview.global.RsData.RsData;
-import com.example.learningreview.global.eventPublisher.EventPublisher;
 import com.example.learningreview.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +20,7 @@ public class PostFacade {
     private final PostWriteUseCase postUseCase;
 
     @Transactional
-    public RsData<Post> write(Member author, String title, String content){
+    public RsData<Post> write(PostMember author, String title, String content){
         return postUseCase.write(author, title, content);
     }
 
@@ -47,5 +45,10 @@ public class PostFacade {
             memberDto.getActivityScore()
         );
         postMemberRepository.save(postMember);
+    }
+
+    public Optional<PostMember> findByUsername(String username){
+        Optional<PostMember> postMember =  postMemberRepository.findByUsername(username);
+        return postMember;
     }
 }
