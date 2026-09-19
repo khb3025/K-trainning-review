@@ -5,8 +5,10 @@ import com.example.learningreview.global.jpa.entity.BaseIdAndTime;
 import com.example.learningreview.shared.post.dto.PostCommentDto;
 import com.example.learningreview.shared.post.event.PostCommentCreatedEvent;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +16,12 @@ import java.util.List;
 import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
+@Table(name = "POST_POST")
 public class Post extends BaseIdAndTime {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member author;
@@ -30,7 +34,6 @@ public class Post extends BaseIdAndTime {
     @OneToMany(mappedBy = "post", cascade = {REMOVE, PERSIST}, orphanRemoval = true)
     private List<PostComment> comments = new ArrayList<>();
 
-    protected Post() {}
     public Post(Member author, String title, String content) {
         this.author = author;
         this.title = title;
