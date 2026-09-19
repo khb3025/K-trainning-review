@@ -1,7 +1,5 @@
 package com.example.learningreview.boundedContext.post.app;
 
-import com.example.learningreview.boundedContext.app.MemberFacade;
-import com.example.learningreview.boundedContext.member.domain.Member;
 import com.example.learningreview.boundedContext.post.domain.Post;
 import com.example.learningreview.boundedContext.post.domain.PostMember;
 import com.example.learningreview.boundedContext.post.out.PostRepository;

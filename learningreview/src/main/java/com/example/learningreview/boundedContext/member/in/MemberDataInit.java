@@ -1,6 +1,6 @@
 package com.example.learningreview.boundedContext.member.in;
 
-import com.example.learningreview.boundedContext.app.MemberFacade;
+import com.example.learningreview.boundedContext.member.app.MemberFacade;
 import com.example.learningreview.boundedContext.member.domain.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;

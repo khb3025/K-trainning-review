@@ -1,4 +1,4 @@
-package com.example.learningreview.boundedContext.app;
+package com.example.learningreview.boundedContext.member.app;
 
 import com.example.learningreview.boundedContext.member.domain.Member;
 import com.example.learningreview.boundedContext.member.out.MemberRepository;

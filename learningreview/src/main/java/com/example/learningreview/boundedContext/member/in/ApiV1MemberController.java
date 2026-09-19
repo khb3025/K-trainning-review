@@ -1,6 +1,6 @@
 package com.example.learningreview.boundedContext.member.in;
 
-import com.example.learningreview.boundedContext.app.MemberFacade;
+import com.example.learningreview.boundedContext.member.app.MemberFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
