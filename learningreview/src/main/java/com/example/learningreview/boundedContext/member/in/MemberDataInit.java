@@ -1,6 +1,7 @@
 package com.example.learningreview.boundedContext.member.in;
 
 import com.example.learningreview.boundedContext.app.MemberFacade;
+import com.example.learningreview.boundedContext.member.domain.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -34,11 +35,12 @@ public class MemberDataInit {
     @Transactional
     public void makeBaseMembers(){
         if(memberFacade.count() > 0) return;
-        memberFacade.join("시스템","1234","system");
-        memberFacade.join("홀딩","1234","holding");
-        memberFacade.join("관리자","1234","admin");
-        memberFacade.join("유저1","1234","user1");
-        memberFacade.join("유저2","1234","user2");
-        memberFacade.join("유저3","1234","user3");
+        Member member1 = memberFacade.join("시스템","1234","system").getData();
+        log.debug("member1 : {}", member1.getUsername());
+        Member member2 = memberFacade.join("홀딩","1234","holding").getData();
+        Member member3 = memberFacade.join("관리자","1234","admin").getData();
+        Member member4 = memberFacade.join("유저1","1234","user1").getData();
+        Member member5 = memberFacade.join("유저2","1234","user2").getData();
+        Member member6 = memberFacade.join("유저3","1234","user3").getData();
     }
 }

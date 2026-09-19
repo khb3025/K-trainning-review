@@ -22,6 +22,6 @@ public class PostWriteUseCase {
         // author.increaseActivityScore(3);
         postRepository.save(post);
         eventPublisher.publish(new PostCreatedEvent(new PostDto(post)));
-        return new RsData<>("200-1", "게시글이 작성되었습니다.", post);
+        return new RsData<>("200-1", "%d번째 게시글이 작성되었습니다.".formatted(post.getId()), post);
     }
 }

@@ -44,6 +44,7 @@ public class PostDataInit {
         // user1 회원(4번 회원)이 글 3개 작성
         Member author1 = memberFacade.findByUsername("user1").get();
         Post post1 = postFacade.write(author1, "제목1", "내용1").getData();
+        log.debug("post1 : {}", post1.getId());
         Post post2 = postFacade.write(author1, "제목2", "내용2").getData();
         Post post3 = postFacade.write(author1, "제목3", "내용3").getData();
 
