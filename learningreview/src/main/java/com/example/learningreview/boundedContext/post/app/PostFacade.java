@@ -2,9 +2,12 @@ package com.example.learningreview.boundedContext.post.app;
 
 import com.example.learningreview.boundedContext.member.domain.Member;
 import com.example.learningreview.boundedContext.post.domain.Post;
+import com.example.learningreview.boundedContext.post.domain.PostMember;
+import com.example.learningreview.boundedContext.post.out.PostMemberRepository;
 import com.example.learningreview.boundedContext.post.out.PostRepository;
 import com.example.learningreview.global.RsData.RsData;
 import com.example.learningreview.global.eventPublisher.EventPublisher;
+import com.example.learningreview.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PostFacade {
     private final PostRepository postRepository;
-    private final EventPublisher eventPublisher;
+    private final PostMemberRepository postMemberRepository;
     private final PostWriteUseCase postUseCase;
 
     @Transactional
@@ -30,5 +33,19 @@ public class PostFacade {
     @Transactional(readOnly = true)
     public Optional<Post> findById(int id){
         return postRepository.findById(id);
+    }
+
+    @Transactional
+    public void syncMember(MemberDto memberDto) {
+        PostMember postMember = new PostMember(
+            memberDto.getId(),
+            memberDto.getCreateDate(),
+            memberDto.getModifyDate(),
+            memberDto.getUsername(),
+            memberDto.getNickname(),
+            "",
+            memberDto.getActivityScore()
+        );
+        postMemberRepository.save(postMember);
     }
 }

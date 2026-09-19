@@ -6,6 +6,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
@@ -14,10 +16,23 @@ import static lombok.AccessLevel.PROTECTED;
 @Table(name = "POST_POST_MEMBER")
 public class PostMember extends ReplicaMember {
     public PostMember(
+            int id,
+            LocalDateTime createDate,
+            LocalDateTime modifyDate,
             String username,
             String nickname,
-            String password
+            String password,
+            int activityScore
     ) {
-        super(username, nickname, password);
+        super(
+            id,
+            createDate,
+            modifyDate,
+            username,
+            nickname,
+            password,
+            activityScore
+        );
+
     }
 }
