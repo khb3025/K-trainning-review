@@ -16,9 +16,10 @@ public class PostFacade {
     private final PostRepository postRepository;
 
     @Transactional
-    public void write(Member author, String title, String content){
-        postRepository.save(new Post(author, title, content));
-
+    public Post write(Member author, String title, String content){
+        Post post = new Post(author, title, content);
+        author.increaseActivityScore(3);
+        return postRepository.save(post);
     }
 
     @Transactional(readOnly = true)

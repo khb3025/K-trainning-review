@@ -23,6 +23,7 @@ public class Member extends BaseIdAndTime {
     private String nickname;
     private String password;
     private String username;
+    private int activityScore = 0;
 
     protected Member() {}
 
@@ -30,5 +31,9 @@ public class Member extends BaseIdAndTime {
         this.nickname = nickname;
         this.password = password;
         this.username = username;
+    }
+
+    public void increaseActivityScore(int amount){
+        this.activityScore += amount;
     }
 }
