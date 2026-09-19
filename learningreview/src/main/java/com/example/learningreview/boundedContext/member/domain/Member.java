@@ -2,6 +2,8 @@ package com.example.learningreview.boundedContext.member.domain;
 
 import com.example.learningreview.global.jpa.entity.BaseIdAndTime;
 import com.example.learningreview.shared.member.domain.SourceMember;
+import com.example.learningreview.shared.member.dto.MemberDto;
+import com.example.learningreview.shared.member.event.MemberModifiedEvent;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -34,7 +36,9 @@ public class Member extends SourceMember {
     }
 
     public int increaseActivityScore(int amount){
+        if(amount <= 0) return getActivityScore();
         setActivityScore(getActivityScore() + amount);
+        publishEvent(new MemberModifiedEvent(new MemberDto(this)));
         return getActivityScore();
     }
 }
