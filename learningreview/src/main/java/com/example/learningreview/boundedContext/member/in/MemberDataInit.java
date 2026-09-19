@@ -6,6 +6,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 
 @Configuration
 @Slf4j
@@ -23,6 +24,7 @@ public class MemberDataInit {
     }
 
     @Bean
+    @Order(1)
     public ApplicationRunner MemberDataInitApplicationRunner(){
         return args -> {
             self.makeBaseMembers();
@@ -30,6 +32,7 @@ public class MemberDataInit {
     }
 
     public void makeBaseMembers(){
+        if(memberFacade.count() > 0) return;
         memberFacade.join("시스템","1234","system");
         memberFacade.join("홀딩","1234","holding");
         memberFacade.join("관리자","1234","admin");
