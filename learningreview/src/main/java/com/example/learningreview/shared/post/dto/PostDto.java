@@ -1,0 +1,33 @@
+package com.example.learningreview.shared.post.dto;
+
+import com.example.learningreview.boundedContext.post.domain.Post;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Getter
+@AllArgsConstructor
+public class PostDto {
+    private final int id;
+    private final LocalDateTime createDate;
+    private final LocalDateTime modifyDate;
+    private final int authorId;
+    private final String authorName;
+    private final String title;
+    private final String content;
+
+    public PostDto(Post post){
+        this(
+                post.getId(),
+                post.getCreateDate(),
+                post.getModifyDate(),
+                post.getAuthor().getId(),
+                post.getAuthor().getUsername(),
+                post.getTitle(),
+                post.getContent()
+        );
+    }
+}

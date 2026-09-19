@@ -2,6 +2,8 @@ package com.example.learningreview.boundedContext.post.domain;
 
 import com.example.learningreview.boundedContext.member.domain.Member;
 import com.example.learningreview.global.jpa.entity.BaseIdAndTime;
+import com.example.learningreview.shared.post.dto.PostCommentDto;
+import com.example.learningreview.shared.post.event.PostCommentCreatedEvent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,7 +40,7 @@ public class Post extends BaseIdAndTime {
     public PostComment addComment(Member author, String content){
         PostComment postComment = new PostComment(this, author, content);
         comments.add(postComment);
-        author.increaseActivityScore(1);
+        publishEvent(new PostCommentCreatedEvent(new PostCommentDto(postComment)));
         return postComment;
     }
 

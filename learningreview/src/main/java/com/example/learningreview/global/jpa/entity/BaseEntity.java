@@ -1,5 +1,6 @@
 package com.example.learningreview.global.jpa.entity;
 
+import com.example.learningreview.global.global.GlobalConfig;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 
@@ -16,4 +17,7 @@ public abstract class BaseEntity {
         return getClass().getSimpleName();
     }
 
+    public void publishEvent(Object event){
+        GlobalConfig.getEventPublisher().publish(event);
+    }
 }

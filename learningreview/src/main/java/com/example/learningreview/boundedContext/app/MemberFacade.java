@@ -10,9 +10,11 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MemberFacade {
 
     private final MemberRepository memberRepository;
+    private final MemberUseCase memberUseCase;
 
     public long count(){
         return memberRepository.count();
@@ -20,14 +22,15 @@ public class MemberFacade {
 
     @Transactional
     public void join(String nickname, String password, String username){
-        memberRepository.save(new Member(
-            nickname,
-            password,
-            username
-        ));
+        memberUseCase.join(nickname, password, username);
+
     }
 
     public Optional<Member> findByUsername(String username){
         return memberRepository.findByUsername(username);
+    }
+
+    public Optional<Member> findById(int id){
+        return memberRepository.findById(id);
     }
 }
