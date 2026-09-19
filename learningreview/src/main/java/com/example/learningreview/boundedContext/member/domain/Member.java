@@ -1,5 +1,6 @@
 package com.example.learningreview.boundedContext.member.domain;
 
+import com.example.learningreview.global.jpa.entity.BaseIdAndTime;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
@@ -17,15 +18,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Getter
-@AllArgsConstructor
-public class Member {
-    @Id @GeneratedValue(strategy = IDENTITY)
-    private int id;
-
-    @CreatedDate
-    private LocalDateTime createDate;
-    @LastModifiedDate
-    private LocalDateTime modifyDate;
+public class Member extends BaseIdAndTime {
 
     private String nickname;
     private String password;

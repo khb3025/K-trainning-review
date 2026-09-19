@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
+import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
 @Slf4j
@@ -30,7 +31,7 @@ public class MemberDataInit {
             self.makeBaseMembers();
         };
     }
-
+    @Transactional
     public void makeBaseMembers(){
         if(memberFacade.count() > 0) return;
         memberFacade.join("시스템","1234","system");

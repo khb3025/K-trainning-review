@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
+import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
 @Slf4j
@@ -33,9 +34,10 @@ public class PostDataInit {
     public ApplicationRunner postDataInitApplicationRunner(){
         return args -> {
             self.makeBasePosts();
+            self.makeBasePostComments();
         };
     }
-
+    @Transactional
     public void makeBasePosts() {
         if (postFacade.count() > 0) return;
 
@@ -56,4 +58,34 @@ public class PostDataInit {
 
     }
 
+    @Transactional
+    public void makeBasePostComments() {
+
+        Post post1 = postFacade.findById(1).get();
+        Post post2 = postFacade.findById(2).get();
+        Post post3 = postFacade.findById(3).get();
+        Post post4 = postFacade.findById(4).get();
+        Post post5 = postFacade.findById(5).get();
+        Post post6 = postFacade.findById(6).get();
+
+        // user1 회원(4번 회원)이 글 3개 작성
+        Member author1 = memberFacade.findByUsername("user1").get();
+        Member author2 = memberFacade.findByUsername("user2").get();
+        Member author3 = memberFacade.findByUsername("user3").get();
+
+        if( post1.hasComments() ) return;
+
+        post1.addComment(author1, "댓글1");
+        post1.addComment(author2, "댓글2");
+        post1.addComment(author3, "댓글3");
+
+        post2.addComment(author2, "댓글4");
+        post2.addComment(author2, "댓글5");
+
+        post3.addComment(author3, "댓글6");
+        post3.addComment(author1, "댓글7");
+
+        post4.addComment(author1, "댓글8");
+
+    }
 }
