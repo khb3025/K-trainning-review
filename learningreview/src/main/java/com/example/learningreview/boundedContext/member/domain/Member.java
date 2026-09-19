@@ -1,6 +1,7 @@
 package com.example.learningreview.boundedContext.member.domain;
 
 import com.example.learningreview.global.jpa.entity.BaseIdAndTime;
+import com.example.learningreview.shared.member.domain.SourceMember;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,21 +19,22 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Getter
 @Table(name = "MEMBER_MEMBER")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member extends BaseIdAndTime {
+public class Member extends SourceMember {
 
-    private String nickname;
-    private String password;
-    @Column(unique = true)
-    private String username;
-    private int activityScore; // int 는 설정안해도 기본 0 //Integer 는 null
-
-    public Member(String nickname, String password, String username) {
-        this.nickname = nickname;
-        this.password = password;
-        this.username = username;
+    public Member(
+        String nickname,
+        String password,
+        String username
+    ) {
+        super(
+            username,
+            nickname,
+            password
+        );
     }
 
-    public void increaseActivityScore(int amount){
-        this.activityScore += amount;
+    public int increaseActivityScore(int amount){
+        setActivityScore(getActivityScore() + amount);
+        return getActivityScore();
     }
 }
