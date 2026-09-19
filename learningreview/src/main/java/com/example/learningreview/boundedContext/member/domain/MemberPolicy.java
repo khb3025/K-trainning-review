@@ -1,8 +1,11 @@
 package com.example.learningreview.boundedContext.member.domain;
 
+import org.springframework.stereotype.Service;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+@Service
 public class MemberPolicy {
     public static final int PASSWORD_CHANGE_LIMIT = 90;
 
@@ -18,6 +21,5 @@ public class MemberPolicy {
     public boolean isNeedToChangePassword(LocalDateTime lastChangeDate){
         return lastChangeDate.plusDays(getNeedToChangePasswordDays()).isBefore(LocalDateTime.now());
     }
-
 
 }
