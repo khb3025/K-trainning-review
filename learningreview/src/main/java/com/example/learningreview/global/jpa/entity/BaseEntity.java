@@ -16,7 +16,7 @@ public abstract class BaseEntity {
     public abstract LocalDateTime getCreateDate();
     public abstract LocalDateTime getModifyDate();
 
-    public String getClassName(){
+    public String getModelTypeCode(){
         return getClass().getSimpleName();
     }
 

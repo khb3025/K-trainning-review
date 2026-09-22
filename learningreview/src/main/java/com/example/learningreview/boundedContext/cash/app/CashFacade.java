@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Dictionary;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -35,5 +38,13 @@ public class CashFacade {
     public Wallet createWallet(CashMember cashMember){
         Wallet wallet = new Wallet(cashMember);
         return walletRepository.save(wallet);
+    }
+
+    public Optional<CashMember> findMemberByUsername(String username) {
+        return cashMemberRepository.findByUsername(username);
+    }
+
+    public Optional<Wallet> findWalletByHolder(CashMember cashMember) {
+        return walletRepository.findByHolder(cashMember);
     }
 }

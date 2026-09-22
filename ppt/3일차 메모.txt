@@ -1,0 +1,22 @@
+system -> 서비스 시스템 전용계정 
+		
+holding -> 계정에 지갑에 입금( 이커머스 기업에서 가지고있는 캐쉬 holding용 - 정산을 위한 계정)
+
+
+1. 조민형 - PM 창업 경험 / JPA 가능
+2. 이다윗
+
+
+4. 박신형 - DM 보내봄
+
+- Java, Spring Legacy, Spring Boot, JPA, MyBatis, REST API / 
+- 설계: 모듈러 모놀리스(MSA 전환 고려), 모놀리스 / 
+- PortOne 정기결제/구독 / 
+- 인프라: Docker, AWS EC2·RDS·VPC·ALB·EBS·NAT Gateway, GitHub Actions, GHCR 기반 CI/CD / 
+- 프로젝트 도메인: 금융, 부동산·매물, SNS, 젠트리피케이션 분석, 카페 매출·재고 관리 / 
+5. 
+
+
+a. 윤준상
+b. 정훈주 / 전혜진
+c. 신동원 / 신중혁
