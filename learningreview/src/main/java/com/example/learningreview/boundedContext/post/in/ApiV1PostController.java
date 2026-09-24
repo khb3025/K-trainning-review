@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/v1/post/posts")
 public class ApiV1PostController {
 
-    private PostFacade postFacade;
+    private final PostFacade postFacade;
 
     @GetMapping("")
     @Transactional(readOnly = true)
