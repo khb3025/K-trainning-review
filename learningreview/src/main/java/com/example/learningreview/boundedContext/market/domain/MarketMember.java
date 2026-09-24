@@ -34,6 +34,4 @@ public class MarketMember extends ReplicaMember {
                 activityScore
         );
     }
-
-
 }
