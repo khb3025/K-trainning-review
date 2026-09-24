@@ -17,12 +17,10 @@ public class PostWriteUseCase {
 
     private final EventPublisher eventPublisher;
     private final PostRepository postRepository;
-    // private final MemberFacade memberFacade;
     private final MemberApiClient memberApiClient;
 
     public RsData<Post> write(PostMember author, String title, String content) {
         Post post = new Post(author, title, content);
-        // author.increaseActivityScore(3);
         postRepository.save(post);
         eventPublisher.publish(new PostCreatedEvent(new PostDto(post)));
         String secureTip = memberApiClient.getRandomSecureTip();
