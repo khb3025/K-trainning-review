@@ -6,10 +6,12 @@ import com.example.learningreview.boundedContext.post.out.PostMemberRepository;
 import com.example.learningreview.boundedContext.post.out.PostRepository;
 import com.example.learningreview.global.RsData.RsData;
 import com.example.learningreview.shared.member.dto.MemberDto;
+import com.example.learningreview.shared.post.dto.PostDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,4 +43,9 @@ public class PostFacade {
     public Optional<PostMember> findByUsername(String username){
         return postSupport.findByUsername(username);
     }
+
+    public List<Post> findByOrderByIdDesc() {
+        return postSupport.findByOrderByIdDesc();
+    }
+
 }

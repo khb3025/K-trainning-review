@@ -1,6 +1,7 @@
 package com.example.learningreview.shared.post.dto;
 
 import com.example.learningreview.boundedContext.post.domain.Post;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +10,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor(
+        onConstructor_ = @JsonCreator(mode=JsonCreator.Mode.PROPERTIES)
+)
 public class PostDto {
     private final int id;
     private final LocalDateTime createDate;
