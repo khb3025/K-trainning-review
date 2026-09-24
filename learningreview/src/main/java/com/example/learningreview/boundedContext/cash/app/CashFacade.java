@@ -9,42 +9,31 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Dictionary;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class CashFacade {
-    private final CashUseCase cashUseCase;
-    private final CashMemberRepository cashMemberRepository;
-    private final WalletRepository walletRepository;
+    private final CashSyncMemberUseCase cashSyncMemberUseCase;
+    private final CashSupport cashSupport;
+    private final CashCreateWalletUseCase cashCreateWalletUseCase;
 
-    @Transactional
-    public CashMember syncMember(MemberDto memberDto) {
-        CashMember cashMember = new CashMember(
-            memberDto.getId(),
-            memberDto.getCreateDate(),
-            memberDto.getModifyDate(),
-            memberDto.getUsername(),
-            memberDto.getNickname(),
-            "",
-            memberDto.getActivityScore()
-        );
-        return cashMemberRepository.save(cashMember);
+
+    public CashMember syncMember(MemberDto memberDto){
+        return cashSyncMemberUseCase.syncMember(memberDto);
     }
 
     @Transactional
     public Wallet createWallet(CashMember cashMember){
-        Wallet wallet = new Wallet(cashMember);
-        return walletRepository.save(wallet);
+        return cashCreateWalletUseCase.createWallet(cashMember);
     }
 
     public Optional<CashMember> findMemberByUsername(String username) {
-        return cashMemberRepository.findByUsername(username);
+        return cashSupport.findMemberByUsername(username);
     }
 
     public Optional<Wallet> findWalletByHolder(CashMember cashMember) {
-        return walletRepository.findByHolder(cashMember);
+        return cashSupport.findWalletByHolder(cashMember);
     }
 }

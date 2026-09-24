@@ -20,7 +20,9 @@ public class Wallet extends BaseManualIdAndTime {
 
     private long balance;
 
-    @OneToMany(mappedBy = "wallet", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true)
+    @OneToMany(mappedBy = "wallet",
+               cascade = {CascadeType.REMOVE, CascadeType.PERSIST},
+               orphanRemoval = true)
     private List<CashLog> cashLogs = new ArrayList<>();
 
     public Wallet(CashMember holder) {
