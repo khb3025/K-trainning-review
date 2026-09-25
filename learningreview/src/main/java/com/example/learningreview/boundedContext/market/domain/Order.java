@@ -1,10 +1,13 @@
 package com.example.learningreview.boundedContext.market.domain;
 
 import com.example.learningreview.global.jpa.entity.BaseIdAndTime;
+import com.example.learningreview.shared.market.dto.OrderDto;
+import com.example.learningreview.shared.market.event.MarketOrderPaymentRequestEvent;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,9 @@ public class Order extends BaseIdAndTime {
     private MarketMember buyer;
     long price;
     long salePrice;
+    private LocalDateTime requestPaymentDate;
+    private LocalDateTime paymentDate;
+
     @OneToMany(
             mappedBy = "order",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
@@ -46,5 +52,27 @@ public class Order extends BaseIdAndTime {
 
         price += orderItem.getPrice();
         salePrice += orderItem.getSalePrice();
+    }
+
+    public void completePayment(){
+        paymentDate = LocalDateTime.now();
+    }
+
+    public boolean isPaid(){
+        return paymentDate != null;
+    }
+
+    public void requestPayment(long pgPaymentAmount){
+        requestPaymentDate = LocalDateTime.now();
+        publishEvent(
+                new MarketOrderPaymentRequestEvent(
+                        new OrderDto(this),
+                        pgPaymentAmount
+                )
+        );
+    }
+
+    public void cancelPayment(){
+        paymentDate = null;
     }
 }

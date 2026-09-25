@@ -4,6 +4,7 @@ import com.example.learningreview.boundedContext.cash.domain.CashMember;
 import com.example.learningreview.boundedContext.cash.domain.Wallet;
 import com.example.learningreview.boundedContext.cash.out.CashMemberRepository;
 import com.example.learningreview.boundedContext.cash.out.WalletRepository;
+import com.example.learningreview.shared.market.event.MarketOrderPaymentRequestEvent;
 import com.example.learningreview.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class CashFacade {
     private final CashSyncMemberUseCase cashSyncMemberUseCase;
     private final CashSupport cashSupport;
     private final CashCreateWalletUseCase cashCreateWalletUseCase;
+    private final CashCompleteOrderPaymentUseCase cashCompleteOrderPaymentUseCase;
 
 
     public CashMember syncMember(MemberDto memberDto){
@@ -35,5 +37,9 @@ public class CashFacade {
 
     public Optional<Wallet> findWalletByHolder(CashMember cashMember) {
         return cashSupport.findWalletByHolder(cashMember);
+    }
+
+    public void handle(MarketOrderPaymentRequestEvent event) {
+        cashCompleteOrderPaymentUseCase.handle(event);
     }
 }

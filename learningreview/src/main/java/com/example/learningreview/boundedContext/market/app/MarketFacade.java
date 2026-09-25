@@ -4,8 +4,11 @@ import com.example.learningreview.boundedContext.market.domain.Cart;
 import com.example.learningreview.boundedContext.market.domain.MarketMember;
 import com.example.learningreview.boundedContext.market.domain.Order;
 import com.example.learningreview.boundedContext.market.domain.Product;
+import com.example.learningreview.boundedContext.market.out.OrderRepository;
 import com.example.learningreview.global.RsData.RsData;
 import com.example.learningreview.shared.market.dto.MarketMemberDto;
+import com.example.learningreview.shared.market.event.CashOrderPaymentFailedEvent;
+import com.example.learningreview.shared.market.event.CashOrderPaymentSucceededEvent;
 import com.example.learningreview.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,10 @@ public class MarketFacade {
     private final MarketCreateProductUseCase marketCreateProductUseCase;
     private final MarketCreateCartUseCase marketCreateCartUseCase;
     private final MarketCreateOrderUseCase marketCreateOrderUseCase;
+    private final MarketCompleteOrderPaymentUseCase marketCompleteOrderPaymentUseCase;
+    private final MarketCancelOrderRequestPaymentUseCase marketCancelOrderRequestPaymentUseCase;
+    private final OrderRepository orderRepository;
+
     @Transactional
     public MarketMember syncMember(MemberDto memberDto) {
         return marketSyncMemberUseCase.syncMember(memberDto);
@@ -69,12 +76,30 @@ public class MarketFacade {
     public Optional<Product> findProductById(int id) {
         return marketSupport.findProductById(id);
     }
+
+    public long ordersCount() {
+        return marketSupport.countOrders();
+    }
+
     @Transactional
     public RsData<Order> createOrder(Cart cart){
         return marketCreateOrderUseCase.createOrder(cart);
     }
 
-    public long ordersCount(){
-        return marketSupport.countOrders();
+    public Optional<Order> findOrderById(int id) {
+        return marketSupport.findOrderById(id);
     }
+
+    public void requestPayment(Order order, long pgPaymentAmount){
+        order.requestPayment(pgPaymentAmount);
+    }
+
+    public void handle(CashOrderPaymentSucceededEvent event) {
+        marketCompleteOrderPaymentUseCase.handle(event);
+    }
+
+    public void handle(CashOrderPaymentFailedEvent event) {
+        marketCancelOrderRequestPaymentUseCase.handle(event);
+    }
+
 }

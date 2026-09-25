@@ -31,9 +31,11 @@ public class Cart extends BaseManualIdAndTime {
         this.buyer = buyer;
     }
 
-    public void addItem(CartItem item){
-        items.add(item);
-        itemsCount++;
+    public void addItem(Product product){
+        CartItem cartItem = new CartItem(this, product);
+        this.getItems().add(cartItem);
+        this.itemsCount++;
+
     }
 
     public boolean hasItems(){

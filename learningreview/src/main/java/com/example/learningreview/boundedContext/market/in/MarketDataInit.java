@@ -42,8 +42,10 @@ public class MarketDataInit {
             self.makeBaseProducts();
             self.makeBaseCartItems();
             self.makeBaseOrder();
+            self.makeBasePaidOrders();
         };
     }
+
 
 
 
@@ -142,20 +144,17 @@ public class MarketDataInit {
         Product product5 = marketFacade.findProductById(5).get();
         Product product6 = marketFacade.findProductById(6).get();
 
-        CartItem cartItem1 = new CartItem(cart1, product1);
-        CartItem cartItem2 = new CartItem(cart2, product2);
-        CartItem cartItem3 = new CartItem(cart3, product3);
-        cart1.addItem(cartItem1);
-        cart1.addItem(cartItem2);
-        cart1.addItem(cartItem3);
+        cart1.addItem(product1);
+        cart1.addItem(product2);
+        cart1.addItem(product3);
+        cart1.addItem(product4);
 
-        CartItem cartItem4 = new CartItem(cart1, product4);
-        CartItem cartItem5 = new CartItem(cart2, product5);
-        cart2.addItem(cartItem4);
-        cart2.addItem(cartItem5);
+        cart2.addItem(product1);
+        cart2.addItem(product2);
+        cart2.addItem(product3);
 
-        CartItem cartItem6 = new CartItem(cart3, product6);
-        cart3.addItem(cartItem6);
+        cart3.addItem(product1);
+        cart3.addItem(product2);
 
     }
     @Transactional
@@ -191,15 +190,18 @@ public class MarketDataInit {
         Product product5 = marketFacade.findProductById(5).get();
         Product product6 = marketFacade.findProductById(6).get();
 
-        CartItem cartItem1 = new CartItem(cart1, product1);
-        CartItem cartItem2 = new CartItem(cart1, product2);
-        CartItem cartItem3 = new CartItem(cart1, product3);
-        CartItem cartItem4 = new CartItem(cart1, product4);
+        cart1.addItem(product1);
+        cart1.addItem(product2);
+        cart1.addItem(product3);
+        cart1.addItem(product4);
 
-        cart1.addItem(cartItem1);
-        cart1.addItem(cartItem2);
-        cart1.addItem(cartItem3);
-        cart1.addItem(cartItem4);
+    }
+    @Transactional
+    public void makeBasePaidOrders() {
+        Order order1 = marketFacade.findOrderById(1).get();
 
+        if (order1.isPaid()) return;
+
+        marketFacade.requestPayment(order1, 0);
     }
 }

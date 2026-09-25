@@ -1,6 +1,8 @@
 package com.example.learningreview.boundedContext.market.in;
 
 import com.example.learningreview.boundedContext.market.app.MarketFacade;
+import com.example.learningreview.shared.market.event.CashOrderPaymentFailedEvent;
+import com.example.learningreview.shared.market.event.CashOrderPaymentSucceededEvent;
 import com.example.learningreview.shared.market.event.MarketMemberCreatedEvent;
 import com.example.learningreview.shared.member.event.MemberJoinedEvent;
 import com.example.learningreview.shared.member.event.MemberModifiedEvent;
@@ -36,4 +38,18 @@ public class MarketEventListener {
     public void handle(MarketMemberCreatedEvent event){
         marketFacade.createCart(event.getMember());
     }
+
+    // Cash
+    @TransactionalEventListener(phase = AFTER_COMMIT)
+    @Transactional(propagation = REQUIRES_NEW)
+    public void handle(CashOrderPaymentSucceededEvent event){
+        marketFacade.handle(event);
+    }
+
+    @TransactionalEventListener(phase = AFTER_COMMIT)
+    @Transactional(propagation = REQUIRES_NEW)
+    public void handle(CashOrderPaymentFailedEvent event){
+        marketFacade.handle(event);
+    }
+
 }
