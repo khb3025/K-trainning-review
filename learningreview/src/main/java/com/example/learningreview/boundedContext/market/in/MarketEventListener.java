@@ -1,6 +1,7 @@
 package com.example.learningreview.boundedContext.market.in;
 
 import com.example.learningreview.boundedContext.market.app.MarketFacade;
+import com.example.learningreview.shared.market.event.MarketMemberCreatedEvent;
 import com.example.learningreview.shared.member.event.MemberJoinedEvent;
 import com.example.learningreview.shared.member.event.MemberModifiedEvent;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,12 @@ public class MarketEventListener {
     @Transactional(propagation = REQUIRES_NEW)
     public void handle(MemberModifiedEvent event){
         marketFacade.syncMember(event.getMemberDto());
+    }
+
+    // Cart
+    @TransactionalEventListener(phase = AFTER_COMMIT)
+    @Transactional(propagation = REQUIRES_NEW)
+    public void handle(MarketMemberCreatedEvent event){
+        marketFacade.createCart(event.getMember());
     }
 }

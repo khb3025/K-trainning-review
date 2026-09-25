@@ -1,6 +1,8 @@
 package com.example.learningreview.boundedContext.market.in;
 
 import com.example.learningreview.boundedContext.market.app.MarketFacade;
+import com.example.learningreview.boundedContext.market.domain.Cart;
+import com.example.learningreview.boundedContext.market.domain.CartItem;
 import com.example.learningreview.boundedContext.market.domain.MarketMember;
 import com.example.learningreview.boundedContext.market.domain.Product;
 import com.example.learningreview.boundedContext.post.domain.Post;
@@ -38,6 +40,7 @@ public class MarketDataInit {
     public ApplicationRunner marketDataInitApplicationRunner(){
         return args -> {
             self.makeBaseProducts();
+            self.makeBaseCartItems();
         };
     }
 
@@ -116,6 +119,42 @@ public class MarketDataInit {
                 35_000,
                 35_000
         );
+    }
+    @Transactional
+    public void makeBaseCartItems() {
+        MarketMember user1Member = marketFacade.findMemberByUsername("user1").get();
+        MarketMember user2Member = marketFacade.findMemberByUsername("user2").get();
+        MarketMember user3Member = marketFacade.findMemberByUsername("user3").get();
+
+        Cart cart1 = marketFacade.findCartByBuyer(user1Member).get();
+        Cart cart2 = marketFacade.findCartByBuyer(user2Member).get();
+        Cart cart3 = marketFacade.findCartByBuyer(user3Member).get();
+
+        if( cart1.hasItems() ) return;
+
+        Product product1 = marketFacade.findProductById(1).get();
+        Product product2 = marketFacade.findProductById(2).get();
+        Product product3 = marketFacade.findProductById(3).get();
+        Product product4 = marketFacade.findProductById(4).get();
+        Product product5 = marketFacade.findProductById(5).get();
+        Product product6 = marketFacade.findProductById(6).get();
+
+        CartItem cartItem1 = new CartItem(cart1, product1);
+        CartItem cartItem2 = new CartItem(cart2, product2);
+        CartItem cartItem3 = new CartItem(cart3, product3);
+        cart1.addItem(cartItem1);
+        cart1.addItem(cartItem2);
+        cart1.addItem(cartItem3);
+
+        CartItem cartItem4 = new CartItem(cart1, product4);
+        CartItem cartItem5 = new CartItem(cart2, product5);
+        cart2.addItem(cartItem4);
+        cart2.addItem(cartItem5);
+
+        CartItem cartItem6 = new CartItem(cart3, product6);
+        cart3.addItem(cartItem6);
 
     }
+
+
 }
