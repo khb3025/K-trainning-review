@@ -2,6 +2,7 @@ package com.example.learningreview.boundedContext.market.app;
 
 import com.example.learningreview.boundedContext.market.domain.Cart;
 import com.example.learningreview.boundedContext.market.domain.MarketMember;
+import com.example.learningreview.boundedContext.market.domain.Order;
 import com.example.learningreview.boundedContext.market.domain.Product;
 import com.example.learningreview.global.RsData.RsData;
 import com.example.learningreview.shared.market.dto.MarketMemberDto;
@@ -22,6 +23,7 @@ public class MarketFacade {
     private final MarketSupport marketSupport;
     private final MarketCreateProductUseCase marketCreateProductUseCase;
     private final MarketCreateCartUseCase marketCreateCartUseCase;
+    private final MarketCreateOrderUseCase marketCreateOrderUseCase;
     @Transactional
     public MarketMember syncMember(MemberDto memberDto) {
         return marketSyncMemberUseCase.syncMember(memberDto);
@@ -67,5 +69,12 @@ public class MarketFacade {
     public Optional<Product> findProductById(int id) {
         return marketSupport.findProductById(id);
     }
+    @Transactional
+    public RsData<Order> createOrder(Cart cart){
+        return marketCreateOrderUseCase.createOrder(cart);
+    }
 
+    public long ordersCount(){
+        return marketSupport.countOrders();
+    }
 }

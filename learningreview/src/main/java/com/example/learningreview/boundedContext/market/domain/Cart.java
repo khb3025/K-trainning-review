@@ -40,4 +40,7 @@ public class Cart extends BaseManualIdAndTime {
         return !items.isEmpty();
     }
 
+    public void clearItems() {
+        this.getItems().clear();
+    }
 }

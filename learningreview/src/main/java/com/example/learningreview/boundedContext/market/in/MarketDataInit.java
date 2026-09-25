@@ -1,10 +1,8 @@
 package com.example.learningreview.boundedContext.market.in;
 
 import com.example.learningreview.boundedContext.market.app.MarketFacade;
-import com.example.learningreview.boundedContext.market.domain.Cart;
-import com.example.learningreview.boundedContext.market.domain.CartItem;
-import com.example.learningreview.boundedContext.market.domain.MarketMember;
-import com.example.learningreview.boundedContext.market.domain.Product;
+import com.example.learningreview.boundedContext.market.domain.*;
+import com.example.learningreview.boundedContext.member.app.MemberFacade;
 import com.example.learningreview.boundedContext.post.domain.Post;
 import com.example.learningreview.shared.post.dto.PostDto;
 import com.example.learningreview.shared.post.out.PostApiClient;
@@ -14,7 +12,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -26,23 +23,29 @@ public class MarketDataInit {
     private final MarketDataInit self;
     private final MarketFacade marketFacade;
     private final PostApiClient postApiClient;
+    private final MemberFacade memberFacade;
+
     public MarketDataInit(
         @Lazy MarketDataInit self,
         MarketFacade marketFacade,
-        PostApiClient postApiClient
-    ){
+        PostApiClient postApiClient,
+        MemberFacade memberFacade){
         this.self = self;
         this.marketFacade = marketFacade;
         this.postApiClient = postApiClient;
+        this.memberFacade = memberFacade;
     }
     @Bean
-    @Order(3)
+    @org.springframework.core.annotation.Order(3)
     public ApplicationRunner marketDataInitApplicationRunner(){
         return args -> {
             self.makeBaseProducts();
             self.makeBaseCartItems();
+            self.makeBaseOrder();
         };
     }
+
+
 
     @Transactional
     public void makeBaseProducts() {
@@ -155,6 +158,48 @@ public class MarketDataInit {
         cart3.addItem(cartItem6);
 
     }
+    @Transactional
+    public void makeBaseOrder() {
 
+        if(marketFacade.ordersCount() > 0) return;
 
+        MarketMember user1Member = marketFacade.findMemberByUsername("user1").get();
+        MarketMember user2Member = marketFacade.findMemberByUsername("user2").get();
+        MarketMember user3Member = marketFacade.findMemberByUsername("user3").get();
+
+        Cart cart1 = marketFacade.findCartByBuyer(
+                user1Member
+        ).get();
+
+        Cart cart2 = marketFacade.findCartByBuyer(
+                user2Member
+        ).get();
+
+        Cart cart3 = marketFacade.findCartByBuyer(
+                user3Member
+        ).get();
+        // createOrder를 처리하는 순간 cart 내 CartItem 이 비워짐
+        Order order1 = marketFacade.createOrder(cart1).getData();
+        Order order2 = marketFacade.createOrder(cart2).getData();
+        Order order3 = marketFacade.createOrder(cart3).getData();
+
+        // cart1에 상품 6개 다시 넣음
+        Product product1 = marketFacade.findProductById(1).get();
+        Product product2 = marketFacade.findProductById(2).get();
+        Product product3 = marketFacade.findProductById(3).get();
+        Product product4 = marketFacade.findProductById(4).get();
+        Product product5 = marketFacade.findProductById(5).get();
+        Product product6 = marketFacade.findProductById(6).get();
+
+        CartItem cartItem1 = new CartItem(cart1, product1);
+        CartItem cartItem2 = new CartItem(cart1, product2);
+        CartItem cartItem3 = new CartItem(cart1, product3);
+        CartItem cartItem4 = new CartItem(cart1, product4);
+
+        cart1.addItem(cartItem1);
+        cart1.addItem(cartItem2);
+        cart1.addItem(cartItem3);
+        cart1.addItem(cartItem4);
+
+    }
 }
