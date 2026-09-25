@@ -38,4 +38,4 @@ out/
 
 db_dev_review.*
 .idea/*
-
+.env
