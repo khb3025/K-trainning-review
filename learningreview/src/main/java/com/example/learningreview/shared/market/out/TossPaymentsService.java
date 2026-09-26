@@ -22,7 +22,7 @@ public class TossPaymentsService {
     private final RestClient tossRestClient;
     private final ObjectMapper objectMapper;
 
-    @Value("${custom.market.toss.payments.secretKey:}")
+    @Value("${market.toss.payments.secretKey:}")
     private String tossSecretKey;
 
     public TossPaymentsService(ObjectMapper objectMapper) {

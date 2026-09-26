@@ -20,7 +20,7 @@ public class ApiV1WalletController {
     @GetMapping("wallets/by-holder/{holderId}")
     public WalletDto getItemByHolder(@PathVariable("holderId") int holderId){
         return cashFacade.findWalletByHolderId(holderId)
-                .map(WalletDto::new)
+                .map(Wallet::toDto)
                 .get();
     }
 }

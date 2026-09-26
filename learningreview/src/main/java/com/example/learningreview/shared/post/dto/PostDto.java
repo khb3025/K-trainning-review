@@ -10,9 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor(
-        onConstructor_ = @JsonCreator(mode=JsonCreator.Mode.PROPERTIES)
-)
+@AllArgsConstructor
 public class PostDto {
     private final int id;
     private final LocalDateTime createDate;
@@ -21,16 +19,4 @@ public class PostDto {
     private final String authorName;
     private final String title;
     private final String content;
-
-    public PostDto(Post post){
-        this(
-                post.getId(),
-                post.getCreateDate(),
-                post.getModifyDate(),
-                post.getAuthor().getId(),
-                post.getAuthor().getUsername(),
-                post.getTitle(),
-                post.getContent()
-        );
-    }
 }

@@ -24,7 +24,7 @@ public class MemberJoinUseCase {
         );
         memberRepository.save(joinMember);
         // 동기화 이벤트 발행
-        eventPublisher.publish(new MemberJoinedEvent(new MemberDto(joinMember)));
+        eventPublisher.publish(new MemberJoinedEvent(joinMember.toDto()));
         return new RsData<>("200-1","%d번째 회원가입 성공".formatted(joinMember.getId()), joinMember);
     }
 }

@@ -17,17 +17,4 @@ public class MarketMemberDto {
     private String nickname;
     private int activityScore;
 
-    public MarketMemberDto(
-            MarketMember member
-    ){
-        this(
-                member.getId(),
-                member.getCreateDate(),
-                member.getModifyDate(),
-                member.getUsername(),
-                member.getNickname(),
-                member.getActivityScore()
-        );
-    }
-
 }

@@ -22,7 +22,7 @@ public class PostWriteUseCase {
     public RsData<Post> write(PostMember author, String title, String content) {
         Post post = new Post(author, title, content);
         postRepository.save(post);
-        eventPublisher.publish(new PostCreatedEvent(new PostDto(post)));
+        eventPublisher.publish(new PostCreatedEvent(post.toDto()));
         String secureTip = memberApiClient.getRandomSecureTip();
         return new RsData<>(
     "200-1",

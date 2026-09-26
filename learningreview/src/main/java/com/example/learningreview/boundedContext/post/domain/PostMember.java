@@ -1,6 +1,7 @@
 package com.example.learningreview.boundedContext.post.domain;
 
 import com.example.learningreview.shared.member.domain.ReplicaMember;
+import com.example.learningreview.shared.member.dto.MemberDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -33,6 +34,5 @@ public class PostMember extends ReplicaMember {
             password,
             activityScore
         );
-
     }
 }

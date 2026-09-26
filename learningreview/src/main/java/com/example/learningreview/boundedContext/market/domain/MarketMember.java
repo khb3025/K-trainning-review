@@ -1,5 +1,6 @@
 package com.example.learningreview.boundedContext.market.domain;
 
+import com.example.learningreview.shared.market.dto.MarketMemberDto;
 import com.example.learningreview.shared.member.domain.ReplicaMember;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -32,6 +33,17 @@ public class MarketMember extends ReplicaMember {
                 nickname,
                 "",
                 activityScore
+        );
+    }
+
+    public MarketMemberDto toDto(){
+        return new MarketMemberDto(
+                getId(),
+                getCreateDate(),
+                getModifyDate(),
+                getUsername(),
+                getNickname(),
+                getActivityScore()
         );
     }
 }

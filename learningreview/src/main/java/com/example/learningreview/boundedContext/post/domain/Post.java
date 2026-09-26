@@ -2,6 +2,7 @@ package com.example.learningreview.boundedContext.post.domain;
 
 import com.example.learningreview.global.jpa.entity.BaseIdAndTime;
 import com.example.learningreview.shared.post.dto.PostCommentDto;
+import com.example.learningreview.shared.post.dto.PostDto;
 import com.example.learningreview.shared.post.event.PostCommentCreatedEvent;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -39,12 +40,23 @@ public class Post extends BaseIdAndTime {
     public PostComment addComment(PostMember author, String content){
         PostComment postComment = new PostComment(this, author, content);
         comments.add(postComment);
-        publishEvent(new PostCommentCreatedEvent(new PostCommentDto(postComment)));
+        publishEvent(new PostCommentCreatedEvent(postComment.toDto()));
         return postComment;
     }
 
     public boolean hasComments() {
-
         return !comments.isEmpty();
+    }
+
+    public PostDto toDto(){
+        return new PostDto(
+                getId(),
+                getCreateDate(),
+                getModifyDate(),
+                author.getId(),
+                author.getUsername(),
+                title,
+                content
+        );
     }
 }

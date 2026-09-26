@@ -11,12 +11,12 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class PostApiClient {
     private final RestClient restClient;
 
     public PostApiClient(
-            @Value("${custom.global.internalBackUrl}") String baseUrl
+            @Value("${custom.global.internalBackUrl}")
+            String baseUrl
     ){
         this.restClient = RestClient
                 .builder()

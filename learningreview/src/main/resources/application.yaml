@@ -33,19 +33,26 @@ logging:
 
 custom:
   global:
-    holdingMemberId: 2
     internalBackUrl: http://localhost:${server.port:8080}
 
-  market:
-    product:
-      payoutRate: 90
-    toss:
-      payments:
-        secretKey: ${TOSS_PAYMENTS_SECRET_KEY:}
+cash:
+  holding:
+    member:
+      id: 2
 
-  member:
-    password:
-      changeDays: 90
+market:
+  product:
+    payout:
+      rate: 90
+  toss:
+    payments:
+      secretKey: ${TOSS_PAYMENTS_SECRET_KEY:}
+
+
+member:
+  password:
+    change:
+      days: 90
 
 
 
