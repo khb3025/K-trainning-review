@@ -30,8 +30,8 @@ public class CashCompleteOrderPaymentUseCase {
         if(pgPaymentAmount > 0){
             buyer.credit(pgPaymentAmount,
                          CashLog.EventType.충전__PG결제_토스페이먼츠,
-                    "Order",
-                        order.getId());
+                         order.getModelTypeCode(),
+                         order.getId());
         }
 
         boolean canPay = buyer.getBalance() >= order.getSalePrice();
@@ -41,13 +41,13 @@ public class CashCompleteOrderPaymentUseCase {
             buyer.debit(
                     order.getSalePrice(),
                     CashLog.EventType.사용__주문결제,
-                    "Order",
+                    order.getModelTypeCode(),
                     order.getId()
             );
             holding.credit(
                     order.getSalePrice(),
                     CashLog.EventType.임시보관__주문결제,
-                    "Order",
+                    order.getModelTypeCode(),
                     order.getId()
             );
 

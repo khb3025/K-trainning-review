@@ -1,6 +1,8 @@
 package com.example.learningreview.shared.post.dto;
 
 import com.example.learningreview.boundedContext.post.domain.Post;
+import com.example.learningreview.global.jpa.entity.BaseEntity;
+import com.example.learningreview.standard.HasModelTypeCode;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +13,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class PostDto {
+public class PostDto implements HasModelTypeCode {
     private final int id;
     private final LocalDateTime createDate;
     private final LocalDateTime modifyDate;
@@ -19,4 +21,10 @@ public class PostDto {
     private final String authorName;
     private final String title;
     private final String content;
+
+
+    @Override
+    public String getModelTypeCode() {
+        return "Post";
+    }
 }

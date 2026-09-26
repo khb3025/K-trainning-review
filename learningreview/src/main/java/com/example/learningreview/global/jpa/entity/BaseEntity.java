@@ -1,6 +1,7 @@
 package com.example.learningreview.global.jpa.entity;
 
 import com.example.learningreview.global.global.GlobalConfig;
+import com.example.learningreview.standard.HasModelTypeCode;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public abstract class BaseEntity {
+public abstract class BaseEntity implements HasModelTypeCode {
     public abstract int getId();
     public abstract LocalDateTime getCreateDate();
     public abstract LocalDateTime getModifyDate();
