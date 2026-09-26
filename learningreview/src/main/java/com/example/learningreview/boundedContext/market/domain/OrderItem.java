@@ -53,7 +53,17 @@ public class OrderItem extends BaseIdAndTime {
                 this.productName,
                 this.price,
                 this.salePrice,
-                this.payoutRate
+                this.payoutRate,
+                getPayoutFee(),
+                getSalePriceWithoutFee()
         );
+    }
+
+    public long getPayoutFee() {
+        return MarketPolicy.calculatePayoutFee(getSalePrice(), getPayoutRate());
+    }
+
+    public long getSalePriceWithoutFee() {
+        return MarketPolicy.calculateSalePriceWithoutFee(getSalePrice(), getPayoutRate());
     }
 }
