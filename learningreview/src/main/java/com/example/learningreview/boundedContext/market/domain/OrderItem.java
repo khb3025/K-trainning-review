@@ -1,6 +1,7 @@
 package com.example.learningreview.boundedContext.market.domain;
 
 import com.example.learningreview.global.jpa.entity.BaseIdAndTime;
+import com.example.learningreview.shared.market.dto.OrderItemDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -36,5 +37,23 @@ public class OrderItem extends BaseIdAndTime {
         this.productName = productName;
         this.price = price;
         this.salePrice = salePrice;
+    }
+
+    public OrderItemDto toDto(){
+        return new OrderItemDto(
+                this.getId(),
+                this.getCreateDate(),
+                this.getModifyDate(),
+                this.order.getId(),
+                this.order.getBuyer().getId(),
+                this.order.getBuyer().getUsername(),
+                this.product.getSeller().getId(),
+                this.product.getSeller().getUsername(),
+                this.product.getId(),
+                this.productName,
+                this.price,
+                this.salePrice,
+                this.payoutRate
+        );
     }
 }

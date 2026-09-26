@@ -2,13 +2,19 @@ package com.example.learningreview.boundedContext.market.in;
 
 import com.example.learningreview.boundedContext.market.app.MarketFacade;
 import com.example.learningreview.boundedContext.market.domain.Order;
+import com.example.learningreview.boundedContext.market.domain.OrderItem;
 import com.example.learningreview.global.RsData.RsData;
 import com.example.learningreview.global.exception.DomainException;
 import com.example.learningreview.shared.cash.out.CashApiClient;
+import com.example.learningreview.shared.market.dto.OrderItemDto;
 import com.example.learningreview.shared.market.out.TossPaymentsService;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/market/orders")
@@ -66,4 +72,14 @@ public class ApiV1OrderController {
         return new RsData<>("202-1", "결제 프로세스가 시작되었습니다.");
     }
 
+    @GetMapping("/{id}/items")
+    @Transactional(readOnly = true)
+    public List<OrderItemDto> getItems(@PathVariable int id){
+        return marketFacade.findOrderById(id)
+                .get()
+                .getItems()
+                .stream()
+                .map(OrderItem::toDto)
+                .toList();
+    }
 }
