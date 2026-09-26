@@ -4,6 +4,7 @@ import com.example.learningreview.boundedContext.cash.domain.CashMember;
 import com.example.learningreview.boundedContext.cash.domain.Wallet;
 import com.example.learningreview.boundedContext.cash.out.CashMemberRepository;
 import com.example.learningreview.boundedContext.cash.out.WalletRepository;
+import com.example.learningreview.shared.cash.dto.CashMemberDto;
 import com.example.learningreview.shared.cash.dto.WalletDto;
 import com.example.learningreview.shared.market.dto.OrderDto;
 import com.example.learningreview.shared.market.event.MarketOrderPaymentRequestEvent;
@@ -29,7 +30,7 @@ public class CashFacade {
     }
 
     @Transactional
-    public Wallet createWallet(CashMember cashMember){
+    public Wallet createWallet(CashMemberDto cashMember){
         return cashCreateWalletUseCase.createWallet(cashMember);
     }
 
