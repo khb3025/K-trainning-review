@@ -1,5 +1,6 @@
 package com.example.learningreview.shared.member.out;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -7,9 +8,11 @@ import org.springframework.web.client.RestClient;
 public class MemberApiClient {
     private RestClient restClient;
 
-    public MemberApiClient() {
+    public MemberApiClient(
+            @Value("${custom.global.internalBackUrl}") String baseUrl
+    ) {
         this.restClient = RestClient.builder()
-                .baseUrl("http://localhost:8080/api/v1/member/members")
+                .baseUrl(baseUrl + "/api/v1/member/members")
                 .build();
     }
 

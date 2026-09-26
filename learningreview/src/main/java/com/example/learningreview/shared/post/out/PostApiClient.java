@@ -2,6 +2,7 @@ package com.example.learningreview.shared.post.out;
 
 import com.example.learningreview.shared.post.dto.PostDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -14,10 +15,12 @@ import java.util.List;
 public class PostApiClient {
     private final RestClient restClient;
 
-    public PostApiClient(){
+    public PostApiClient(
+            @Value("${custom.global.internalBackUrl}") String baseUrl
+    ){
         this.restClient = RestClient
                 .builder()
-                .baseUrl("http://localhost:8080/api/v1/post")
+                .baseUrl(baseUrl+"/api/v1/post")
                 .build();
     }
 

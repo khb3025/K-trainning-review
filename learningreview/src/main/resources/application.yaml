@@ -32,7 +32,21 @@ logging:
     org.springframework.transaction.interceptor: TRACE
 
 custom:
+  global:
+    holdingMemberId: 2
+    internalBackUrl: http://localhost:${server.port:8080}
+
   market:
+    product:
+      payoutRate: 90
     toss:
       payments:
         secretKey: ${TOSS_PAYMENTS_SECRET_KEY:}
+
+  member:
+    password:
+      changeDays: 90
+
+
+
+
