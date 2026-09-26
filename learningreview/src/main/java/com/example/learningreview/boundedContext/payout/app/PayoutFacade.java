@@ -1,5 +1,6 @@
 package com.example.learningreview.boundedContext.payout.app;
 
+import com.example.learningreview.boundedContext.payout.domain.Payout;
 import com.example.learningreview.shared.market.dto.OrderDto;
 import com.example.learningreview.shared.member.dto.MemberDto;
 import com.example.learningreview.shared.payout.dto.PayoutMemberDto;
@@ -18,8 +19,8 @@ public class PayoutFacade {
         payoutSyncMemberUseCase.syncMember(member);
     }
 
-    public void createPayout(PayoutMemberDto member) {
-        payoutCreatePayoutUseCase.createPayout(member);
+    public Payout createPayout(PayoutMemberDto member) {
+        return payoutCreatePayoutUseCase.createPayout(member);
     }
 
     public void addPayoutCandidateItems(OrderDto order) {
