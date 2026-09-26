@@ -94,12 +94,12 @@ public class MarketFacade {
         order.requestPayment(pgPaymentAmount);
     }
 
-    public void handle(CashOrderPaymentSucceededEvent event) {
-        marketCompleteOrderPaymentUseCase.handle(event);
+    public void completeOrderPayment(CashOrderPaymentSucceededEvent event) {
+        marketCompleteOrderPaymentUseCase.completeOrderPayment(event.getOrder());
     }
 
-    public void handle(CashOrderPaymentFailedEvent event) {
-        marketCancelOrderRequestPaymentUseCase.handle(event);
+    public void cancelOrderRequestPayment(CashOrderPaymentFailedEvent event) {
+        marketCancelOrderRequestPaymentUseCase.cancelOrderRequestPayment(event.getOrder());
     }
 
 }

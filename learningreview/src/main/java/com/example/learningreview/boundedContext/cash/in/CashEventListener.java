@@ -2,6 +2,7 @@ package com.example.learningreview.boundedContext.cash.in;
 
 import com.example.learningreview.boundedContext.cash.app.CashFacade;
 import com.example.learningreview.boundedContext.cash.domain.CashMember;
+import com.example.learningreview.shared.market.dto.OrderDto;
 import com.example.learningreview.shared.market.event.MarketOrderPaymentRequestEvent;
 import com.example.learningreview.shared.member.event.MemberJoinedEvent;
 import com.example.learningreview.shared.member.event.MemberModifiedEvent;
@@ -34,7 +35,9 @@ public class CashEventListener {
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handle(MarketOrderPaymentRequestEvent event){
-        cashFacade.handle(event);
+        OrderDto order = event.getOrder();
+        long pgPaymentAmount = event.getPgPaymentAmount();
+        cashFacade.completeOrderPayment(order, pgPaymentAmount);
     }
 
 

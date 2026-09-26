@@ -19,40 +19,42 @@ public class CashCompleteOrderPaymentUseCase {
     private final CashSupport cashSupport;
     private final EventPublisher eventPublisher;
 
-    public void handle(MarketOrderPaymentRequestEvent event){
-
-        Wallet buyer = cashSupport.findWalletByHolderId(event.getOrder().getBuyerId()).get();
+    public void completeOrderPayment(
+            OrderDto order,
+            long pgPaymentAmount
+    ){
+        Wallet buyer = cashSupport.findWalletByHolderId(order.getBuyerId()).get();
         Wallet holding = cashSupport.findHoldingWallet().get();
 
         // PG 충전 금액
-        if(event.getPgPaymentAmount() > 0){
-            buyer.credit(event.getPgPaymentAmount(),
+        if(pgPaymentAmount > 0){
+            buyer.credit(pgPaymentAmount,
                          CashLog.EventType.충전__PG결제_토스페이먼츠,
                     "Order",
-                        event.getOrder().getId());
+                        order.getId());
         }
 
-        boolean canPay = buyer.getBalance() >= event.getOrder().getSalePrice();
+        boolean canPay = buyer.getBalance() >= order.getSalePrice();
 
         if(canPay){
             // buyer 차감 && holding 증가
             buyer.debit(
-                    event.getOrder().getSalePrice(),
+                    order.getSalePrice(),
                     CashLog.EventType.사용__주문결제,
                     "Order",
-                    event.getOrder().getId()
+                    order.getId()
             );
             holding.credit(
-                    event.getOrder().getSalePrice(),
+                    order.getSalePrice(),
                     CashLog.EventType.임시보관__주문결제,
                     "Order",
-                    event.getOrder().getId()
+                    order.getId()
             );
 
             eventPublisher.publish(
                     new CashOrderPaymentSucceededEvent(
-                            event.getOrder(),
-                            event.getPgPaymentAmount()
+                            order,
+                            pgPaymentAmount
                     )
             );
 
@@ -60,10 +62,10 @@ public class CashCompleteOrderPaymentUseCase {
             eventPublisher.publish(
                     new CashOrderPaymentFailedEvent(
                             "400-1",
-                            "충전은 완료했지만 %번 주문을 결제완료처리를 하기에는 예치금이 부족합니다.".formatted(event.getOrder().getId()),
-                            event.getOrder(),
-                            event.getPgPaymentAmount(),
-                            event.getOrder().getSalePrice() - buyer.getBalance()
+                            "충전은 완료했지만 %번 주문을 결제완료처리를 하기에는 예치금이 부족합니다.".formatted(order.getId()),
+                            order,
+                            pgPaymentAmount,
+                            order.getSalePrice() - buyer.getBalance()
                     )
             );
         }

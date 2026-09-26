@@ -5,6 +5,7 @@ import com.example.learningreview.boundedContext.cash.domain.Wallet;
 import com.example.learningreview.boundedContext.cash.out.CashMemberRepository;
 import com.example.learningreview.boundedContext.cash.out.WalletRepository;
 import com.example.learningreview.shared.cash.dto.WalletDto;
+import com.example.learningreview.shared.market.dto.OrderDto;
 import com.example.learningreview.shared.market.event.MarketOrderPaymentRequestEvent;
 import com.example.learningreview.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +41,8 @@ public class CashFacade {
         return cashSupport.findWalletByHolder(cashMember);
     }
 
-    public void handle(MarketOrderPaymentRequestEvent event) {
-        cashCompleteOrderPaymentUseCase.handle(event);
+    public void completeOrderPayment(OrderDto order,long pgPaymentAmount) {
+        cashCompleteOrderPaymentUseCase.completeOrderPayment(order, pgPaymentAmount);
     }
 
     public Optional<Wallet> findWalletByHolderId(int holderId) {
