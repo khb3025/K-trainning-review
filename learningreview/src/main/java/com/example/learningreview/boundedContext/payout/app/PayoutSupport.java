@@ -1,17 +1,20 @@
 package com.example.learningreview.boundedContext.payout.app;
 
+import com.example.learningreview.boundedContext.payout.domain.PayoutCandidateItem;
 import com.example.learningreview.boundedContext.payout.domain.PayoutMember;
+import com.example.learningreview.boundedContext.payout.out.PayoutCandidateItemRepository;
 import com.example.learningreview.boundedContext.payout.out.PayoutMemberRepository;
-import com.example.learningreview.boundedContext.payout.out.PayoutRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class PayoutSupport {
     private final PayoutMemberRepository payoutMemberRepository;
+    private final PayoutCandidateItemRepository  payoutCandidateItemRepository;
     public Optional<PayoutMember> findSystemMember(){
         return payoutMemberRepository.findByUsername("system");
     }
@@ -19,4 +22,7 @@ public class PayoutSupport {
         return payoutMemberRepository.findById(id);
     }
 
+    public List<PayoutCandidateItem> findPayoutCandidateItems() {
+        return payoutCandidateItemRepository.findAll();
+    }
 }

@@ -16,7 +16,7 @@ public class PayoutSyncMemberUseCase {
     private final EventPublisher eventPublisher;
 
     public void syncMember(MemberDto member){
-        boolean isNew = payoutMemberRepository.existsById(member.getId());
+        boolean isNew = !payoutMemberRepository.existsById(member.getId());
 
         PayoutMember payoutMember = new PayoutMember(
                 member.getId(),
