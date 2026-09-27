@@ -66,4 +66,5 @@ public class PayoutCollectPayoutItemsMoreUseCase {
     private Optional<Payout> findActiveByPayee(PayoutMember payee) {
         return payoutRepository.findByPayeeAndPayoutDateIsNull(payee);
     }
+
 }

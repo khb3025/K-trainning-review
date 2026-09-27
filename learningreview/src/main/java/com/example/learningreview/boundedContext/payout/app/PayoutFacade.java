@@ -40,6 +40,7 @@ public class PayoutFacade {
     public List<PayoutCandidateItem> findPayoutCandidateItems(){
         return payoutSupport.findPayoutCandidateItems();
     }
+
     @Transactional
     public RsData<Integer> completePayoutsMore(int limit) {
         return payoutCompletePayoutsMoreUseCase.completePayoutsMore(limit);
