@@ -1,0 +1,6 @@
+### IntelliJ IDEA ###
+.idea/*
+
+### DB ###
+db_dev_review.*
+.env
