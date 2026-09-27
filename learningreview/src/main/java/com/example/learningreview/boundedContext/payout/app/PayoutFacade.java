@@ -8,6 +8,7 @@ import com.example.learningreview.shared.member.dto.MemberDto;
 import com.example.learningreview.shared.payout.dto.PayoutMemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,12 +20,13 @@ public class PayoutFacade {
     private final PayoutCreatePayoutUseCase payoutCreatePayoutUseCase;
     private final PayoutAddPayoutCandidateItemsUseCase payoutAddPayoutCandidateItemsUseCase;
     private final PayoutCollectPayoutItemsMoreUseCase payoutCollectPayoutItemsMoreUseCase;
+    private final PayoutCompletePayoutsMoreUseCase payoutCompletePayoutsMoreUseCase;
     public void syncMember(MemberDto member) {
         payoutSyncMemberUseCase.syncMember(member);
     }
 
-    public Payout createPayout(PayoutMemberDto member) {
-        return payoutCreatePayoutUseCase.createPayout(member);
+    public Payout createPayout(int payeeId) {
+        return payoutCreatePayoutUseCase.createPayout(payeeId);
     }
 
     public void addPayoutCandidateItems(OrderDto order) {
@@ -38,5 +40,8 @@ public class PayoutFacade {
     public List<PayoutCandidateItem> findPayoutCandidateItems(){
         return payoutSupport.findPayoutCandidateItems();
     }
-
+    @Transactional
+    public RsData<Integer> completePayoutsMore(int limit) {
+        return payoutCompletePayoutsMoreUseCase.completePayoutsMore(limit);
+    }
 }

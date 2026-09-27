@@ -4,6 +4,7 @@ import com.example.learningreview.boundedContext.payout.app.PayoutFacade;
 import com.example.learningreview.shared.market.event.MarketOrderPaymentCompletedEvent;
 import com.example.learningreview.shared.member.event.MemberJoinedEvent;
 import com.example.learningreview.shared.member.event.MemberModifiedEvent;
+import com.example.learningreview.shared.payout.event.PayoutCompletedEvent;
 import com.example.learningreview.shared.payout.event.PayoutMemberCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -33,7 +34,7 @@ public class PayoutEventListener {
     @TransactionalEventListener( phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handle(PayoutMemberCreatedEvent event){
-        payoutFacade.createPayout(event.getMember());
+        payoutFacade.createPayout(event.getMember().getId());
     }
 
     @TransactionalEventListener( phase = TransactionPhase.AFTER_COMMIT)
@@ -42,5 +43,9 @@ public class PayoutEventListener {
         payoutFacade.addPayoutCandidateItems(event.getOrder());
     }
 
-
+    @TransactionalEventListener( phase = TransactionPhase.AFTER_COMMIT)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void handle(PayoutCompletedEvent event){
+        payoutFacade.createPayout(event.getPayout().getPayeeId());
+    }
 }

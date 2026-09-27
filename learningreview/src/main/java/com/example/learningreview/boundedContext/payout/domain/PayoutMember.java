@@ -46,4 +46,5 @@ public class PayoutMember extends ReplicaMember {
                 getActivityScore()
         );
     }
+
 }

@@ -7,6 +7,7 @@ import com.example.learningreview.shared.market.dto.OrderDto;
 import com.example.learningreview.shared.market.event.MarketOrderPaymentRequestEvent;
 import com.example.learningreview.shared.member.event.MemberJoinedEvent;
 import com.example.learningreview.shared.member.event.MemberModifiedEvent;
+import com.example.learningreview.shared.payout.event.PayoutCompletedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -39,7 +40,6 @@ public class CashEventListener {
         cashFacade.createWallet(event.getCashMemberDto());
     }
 
-
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handle(MarketOrderPaymentRequestEvent event){
@@ -48,5 +48,10 @@ public class CashEventListener {
         cashFacade.completeOrderPayment(order, pgPaymentAmount);
     }
 
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void handle(PayoutCompletedEvent event){
 
+        cashFacade.completePayout(event.getPayout());
+    }
 }

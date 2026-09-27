@@ -52,6 +52,7 @@ public class PayoutDataInit {
             self.forceMakePayoutReadyCandidatesItems();
             self.collectPayoutItemsMore();
             self.runCollectPayoutItemsBatchJob();
+            self.completePayoutsMore();
         };
     }
 
@@ -72,7 +73,6 @@ public class PayoutDataInit {
 
     }
 
-    @Transactional
     public void runCollectPayoutItemsBatchJob() {
         JobParameters jobParameters = new JobParametersBuilder()
                 .addString(
@@ -94,5 +94,11 @@ public class PayoutDataInit {
         }
     }
 
+    @Transactional
+    public void completePayoutsMore() {
+        payoutFacade.completePayoutsMore(4);
+        payoutFacade.completePayoutsMore(2);
+        payoutFacade.completePayoutsMore(2);
+    }
 
 }

@@ -9,6 +9,7 @@ import com.example.learningreview.shared.cash.dto.WalletDto;
 import com.example.learningreview.shared.market.dto.OrderDto;
 import com.example.learningreview.shared.market.event.MarketOrderPaymentRequestEvent;
 import com.example.learningreview.shared.member.dto.MemberDto;
+import com.example.learningreview.shared.payout.dto.PayoutDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,7 @@ public class CashFacade {
     private final CashSupport cashSupport;
     private final CashCreateWalletUseCase cashCreateWalletUseCase;
     private final CashCompleteOrderPaymentUseCase cashCompleteOrderPaymentUseCase;
-
+    private final CashCompletePayoutUseCase cashCompletePayoutUseCase;
 
     public CashMember syncMember(MemberDto memberDto){
         return cashSyncMemberUseCase.syncMember(memberDto);
@@ -48,5 +49,10 @@ public class CashFacade {
 
     public Optional<Wallet> findWalletByHolderId(int holderId) {
         return cashSupport.findWalletByHolderId(holderId);
+    }
+
+    public void completePayout(PayoutDto payout) {
+
+        cashCompletePayoutUseCase.completePayout(payout);
     }
 }
