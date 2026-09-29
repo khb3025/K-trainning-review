@@ -1,6 +1,9 @@
 ### IntelliJ IDEA ###
-.idea/*
+**/.idea/
 
 ### DB ###
 db_dev_review.*
 .env
+
+### Office temp lock files ###
+~$*
